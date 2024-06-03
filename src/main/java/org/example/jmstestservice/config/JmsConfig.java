@@ -12,6 +12,9 @@ import org.springframework.jms.support.converter.MappingJackson2MessageConverter
 import org.springframework.jms.support.converter.MessageConverter;
 import org.springframework.jms.support.converter.MessageType;
 
+import java.lang.reflect.Array;
+import java.util.Arrays;
+
 @Configuration
 public class JmsConfig {
 
@@ -30,20 +33,15 @@ public class JmsConfig {
         connectionFactory.setBrokerURL(brokerUrl);
         connectionFactory.setPassword(user);
         connectionFactory.setUserName(password);
+        connectionFactory.setTrustedPackages(Arrays.asList("org.example.jmstestservice.objects"));
         return connectionFactory;
     }
 
-//    @Bean // Serialize message content to json using TextMessage
-//    public MessageConverter jacksonJmsMessageConverter() {
-//        MappingJackson2MessageConverter converter = new MappingJackson2MessageConverter();
-//        converter.setTargetType(MessageType.TEXT);
-//        converter.setTypeIdPropertyName("_type");
-//        return converter;
-//    }
-
     @Bean
     public JmsTemplate jmsTemplate(){
-        return new JmsTemplate(connectionFactory());
+        JmsTemplate jmsTemplate = new JmsTemplate(connectionFactory());
+        jmsTemplate.setMessageConverter(jacksonJmsMessageConverter());
+        return jmsTemplate;
     }
 
     @Bean
@@ -51,7 +49,16 @@ public class JmsConfig {
         DefaultJmsListenerContainerFactory factory = new DefaultJmsListenerContainerFactory();
         factory.setConnectionFactory(connectionFactory());
         factory.setConcurrency("1-1");
+        factory.setMessageConverter(jacksonJmsMessageConverter());
         return factory;
+    }
+
+    @Bean
+    public MessageConverter jacksonJmsMessageConverter() {
+        MappingJackson2MessageConverter converter = new MappingJackson2MessageConverter();
+        converter.setTargetType(MessageType.TEXT);
+        converter.setTypeIdPropertyName("_type");
+        return converter;
     }
 
 }
