@@ -1,14 +1,23 @@
 package org.example.jmstestservice.enums;
 
-public class Queues {
-    private String name;
+public enum Queues {
 
-    private Queues(String name) {
-        this.name = name;
+    NOTIFICATIONS,
+    PAYMENTS,
+    SUBSCRIPTIONS;
+
+    public static String toString(Queues queues) {
+        switch (queues){
+            case NOTIFICATIONS -> {
+                return "Notifications";
+            }
+            case PAYMENTS -> {
+                return "Payments";
+            }
+            case SUBSCRIPTIONS -> {
+                return "Subscriptions";
+            }
+        }
+        return null;
     }
-
-    public static Queues NOTIFICATIONS = new Queues("Notifications");
-    public static Queues PAYMENTS = new Queues("Payments");
-    public static Queues SUBSCRIPTIONS = new Queues("Subscriptions");
-
 }
