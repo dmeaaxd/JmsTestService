@@ -33,7 +33,6 @@ public class JmsConfig {
         connectionFactory.setBrokerURL(brokerUrl);
         connectionFactory.setPassword(user);
         connectionFactory.setUserName(password);
-        connectionFactory.setTrustedPackages(Arrays.asList("org.example.jmstestservice.objects"));
         return connectionFactory;
     }
 

@@ -1,7 +1,6 @@
 package org.example.jmstestservice.service;
 
-import org.example.jmstestservice.enums.Queues;
-import org.example.jmstestservice.objects.DifficultObject;
+import org.example.jmstestservice.dto.DifficultObject;
 import org.springframework.jms.annotation.JmsListener;
 import org.springframework.stereotype.Service;
 

@@ -1,11 +1,11 @@
 package org.example.jmstestservice.service;
 
-import jakarta.jms.Queue;
-import jakarta.jms.Session;
-import org.example.jmstestservice.objects.DifficultObject;
+import org.example.jmstestservice.dto.MessageDTO;
+import org.example.jmstestservice.dto.TopUpDTO;
+import org.example.jmstestservice.dto.WriteOffDTO;
+import org.example.jmstestservice.dto.DifficultObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jms.core.JmsTemplate;
-import org.springframework.jms.core.MessageCreator;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -20,5 +20,17 @@ public class ProducerService {
 
     public void sendObject(DifficultObject difficultObject) {
         jmsTemplate.convertAndSend("Payments", difficultObject);
+    }
+
+    public void sendTopUp(TopUpDTO topUpDTO) {
+        jmsTemplate.convertAndSend("topUpQueue", topUpDTO);
+    }
+
+    public void sendWriteOff(WriteOffDTO writeOffDTO) {
+        jmsTemplate.convertAndSend("writeOffQueue", writeOffDTO);
+    }
+
+    public void sendNotification(MessageDTO messageDTO) {
+        jmsTemplate.convertAndSend("notificationQueue", messageDTO);
     }
 }

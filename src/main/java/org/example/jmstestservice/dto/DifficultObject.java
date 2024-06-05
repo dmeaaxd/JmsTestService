@@ -1,4 +1,4 @@
-package org.example.jmstestservice.objects;
+package org.example.jmstestservice.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
